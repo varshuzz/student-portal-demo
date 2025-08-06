@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Fun Text Transformer</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Indie+Flower&family=Press+Start+2P&family=Courier+Prime&family=Pacifico&family=Roboto&display=swap');
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #ffe6f0;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h1 {
+      color: #cc3366;
+    }
+
+    textarea, select, button {
+      width: 100%;
+      max-width: 600px;
+      margin: 10px 0;
+      padding: 12px;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    button {
+      background-color: #cc3366;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #b32459;
+    }
+
+    .output {
+      margin-top: 20px;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 600px;
+      white-space: pre-wrap;
+      color: #333;
+    }
+
+    label {
+      font-weight: bold;
+      margin-top: 10px;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🎉 Fun Text Transformer</h1>
+
+  <textarea id="inputText" rows="5" placeholder="Type your text here..."></textarea>
+
+  <label for="transformType">Choose Transformation:</label>
+  <select id="transformType">
+    <option value="reverse">🔁 Reverse Text</option>
+    <option value="sarcastic">😏 Sarcastic Case</option>
+    <option value="leet">💻 Leet Speak</option>
+    <option value="uppercase">🔠 UPPERCASE</option>
+    <option value="lowercase">🔡 lowercase</option>
+    <option value="capitalized">📝 Capitalized Words</option>
+  </select>
+
+  <label for="fontSelect">Choose Font Style:</label>
+  <select id="fontSelect">
+    <option value="'Segoe UI', sans-serif">Default (Segoe UI)</option>
+    <option value="'Courier Prime', monospace">Courier Prime</option>
+    <option value="'Indie Flower', cursive">Indie Flower</option>
+    <option value="'Press Start 2P', cursive">Pixel / Retro</option>
+    <option value="'Pacifico', cursive">Pacifico (Handwritten)</option>
+    <option value="'Roboto', sans-serif">Roboto</option>
+  </select>
+
+  <button onclick="transformText()">Transform</button>
+
+  <div class="output" id="outputText">Transformed text will appear here...</div>
+
+  <script>
+    function transformText() {
+      const input = document.getElementById('inputText').value;
+      const type = document.getElementById('transformType').value;
+      const font = document.getElementById('fontSelect').value;
+      const outputDiv = document.getElementById('outputText');
+      let output = '';
+
+      switch (type) {
+        case 'reverse':
+          output = input.split('').reverse().join('');
+          break;
+        case 'sarcastic':
+          output = input
+            .split('')
+            .map((c, i) => (i % 2 === 0 ? c.toLowerCase() : c.toUpperCase()))
+            .join('');
+          break;
+        case 'leet':
+          const leetMap = { a: '4', e: '3', i: '1', o: '0', s: '5', t: '7' };
+          output = input
+            .toLowerCase()
+            .split('')
+            .map(c => leetMap[c] || c)
+            .join('');
+          break;
+        case 'uppercase':
+          output = input.toUpperCase();
+          break;
+        case 'lowercase':
+          output = input.toLowerCase();
+          break;
+        case 'capitalized':
+          output = input.replace(/\b\w/g, char => char.toUpperCase());
+          break;
+        default:
+          output = input;
+      }
+
+      outputDiv.textContent = output;
+      outputDiv.style.fontFamily = font;
+    }
+  </script>
+
+</body>
+</html>
